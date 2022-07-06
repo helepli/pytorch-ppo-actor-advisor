@@ -18,7 +18,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--name')
 parser.add_argument('--env_name', default="PongNoFrameskip-v4")
 parser.add_argument('--model', default="mlp")
-parser.add_argument("--save", type=str, help="Basename of saved weight files. If not given, nothing is saved")
+parser.add_argument("--save", type=str, default="", help="Basename of saved weight files. If not given, nothing is saved")
 parser.add_argument("--advisors", type=str, nargs='*', default=[], help="model zip file of the policy that is going to be loaded and used as advisors")
 parser.add_argument('--gamma', default=.99, type=float)
 parser.add_argument('--lam', default=.95, type=float)
@@ -98,6 +98,9 @@ for i in range(args.num_iterations):
     game_player.run_rollout(args, shared_obs, rewards, discounted_rewards,
                             values, policy_probs, actions, model,
                             obs_normalizer, device, episode_ends)
+
+    if args.save != "":
+        torch.save(model, args.name)
 
     observations = shared_obs.copy()
 

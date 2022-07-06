@@ -92,6 +92,9 @@ class MLPBase(nn.Module):
         action_logits = self.actor(x)
         return value, self.dist(action_logits)
 
+    def save(self, name):
+        torch.save(self, name)
+
 
 class Discrete(nn.Module):
     """A module that builds a Categorical distribution from logits."""
