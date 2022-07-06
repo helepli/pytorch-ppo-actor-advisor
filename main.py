@@ -12,12 +12,14 @@ from worker import GamePlayer
 from gae import gae
 from util import get_gym_env_info
 from running_mean_std import RunningMeanStd, apply_normalizer
-from tracker import WandBTracker, ConsoleTracker
+from tracker import ConsoleTracker
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--name')
 parser.add_argument('--env_name', default="PongNoFrameskip-v4")
 parser.add_argument('--model', default="mlp")
+parser.add_argument("--save", type=str, help="Basename of saved weight files. If not given, nothing is saved")
+parser.add_argument("--advisors", type=str, nargs='*', default=[], help="model zip file of the policy that is going to be loaded and used as advisors")
 parser.add_argument('--gamma', default=.99, type=float)
 parser.add_argument('--lam', default=.95, type=float)
 parser.add_argument('--epsilon', default=.1, type=float)

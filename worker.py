@@ -87,6 +87,9 @@ class SubprocWorker:
         self.env = gym.make(args.env_name)
         self.env.reset()
 
+        self.outfile = open('out-'+args.name, 'a')
+
+
         # Data preprocessing for raw Atari frames
         self.transform = transforms.Compose([
             transforms.ToPILImage(),
@@ -144,6 +147,10 @@ class SubprocWorker:
             if done:
                 info["final_episode_length"] = self.episode_steps
                 info["final_episode_rewards"] = self.episode_rewards
+
+                print('episode rewards ', self.episode_rewards)
+                print(self.episode_rewards, file=self.outfile)
+                self.outfile.flush()
                 obs = self.env.reset()
 
                 # This breaks the Box2d games but should try adding it back for
